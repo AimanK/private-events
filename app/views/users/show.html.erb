@@ -1,20 +1,21 @@
 <h1>All attended events for <%= @user.email %> </h1>
 
-
-<% if @user.attended_events.where('date < ?', Date.today).any? %>
-    <h2>Previously attended events: </h2>
+<h2>Previously attended events: </h2>
+<% if @user.attended_events.past.any? %>
     <ul>
-        <% @user.attended_events.where('date < ?', Date.today).each do |event| %>
-            <li><%= event.title %></li>
+        <% @user.attended_events.past.each do |event| %>
+            <li><%= event.name%></li>
         <% end %>
     </ul>
 <% end %>
 
-<% if @user.attended_events.where('date >= ?', Date.today).any? %>
-    <h2>Future events planned: </h2>
+<h2>Future events planned: </h2>
+<% if @user.attended_events.future.any? %>
     <ul>
-        <% @user.attended_events.where('date >= ?', Date.today).each do |event| %>
-            <li><%= event.title %></li>
+        <% @user.attended_events.future.each do |event| %>
+            <li><%= event.name %></li>
         <% end %>
     </ul>
 <% end %>
+
+<%= link_to "Back", user_events_path(current_user)%>
